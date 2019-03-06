@@ -17,7 +17,6 @@ namespace NotesWebApplication.Helpers
             {
                 rng.GetBytes(salt);
             }
-
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: data,
                 salt: salt,

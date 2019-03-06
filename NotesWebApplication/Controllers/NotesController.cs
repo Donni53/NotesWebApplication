@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -82,7 +83,7 @@ namespace NotesWebApplication.Controllers
                 var id = Cryptography.GetHash(noteViewModel.Data, 16);
                 await db.Notes.AddAsync(new Note(id, noteViewModel.Data, noteViewModel.Destroying, noteViewModel.SyntaxHighlighting, deleteToken));
                 await db.SaveChangesAsync();
-                return new JsonResult(new AddResponse(0, id, deleteToken, ""));
+                return new JsonResult(new AddResponse(0, WebUtility.UrlEncode(id), WebUtility.UrlEncode(deleteToken), ""));
             }
             catch (Exception e)
             {
