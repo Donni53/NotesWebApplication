@@ -41,6 +41,7 @@ namespace NotesWebApplication
             }
 
             app.UseMvc();
+            app.UseStaticFiles();
         }
     }
 }

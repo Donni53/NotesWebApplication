@@ -25,7 +25,7 @@ namespace NotesWebApplication.Controllers
         [HttpGet]
         public string Get()
         {
-            return "Hi!";
+            return "Wrong hole";
         }
 
         [HttpGet]
