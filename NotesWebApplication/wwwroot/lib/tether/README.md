@@ -32,7 +32,7 @@ Let’s say you’ve started working on your dream project&mdash;a fancy web app
 Your HTML code might look something like this:
 
 ```html
-<div class="container">
+<div >
   <img src="awesome-picture.jpg" alt="Awesome Picture" class="picture">
   <div class="comments">
     ...

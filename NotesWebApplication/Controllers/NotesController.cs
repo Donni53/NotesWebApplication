@@ -83,7 +83,7 @@ namespace NotesWebApplication.Controllers
                 var id = Cryptography.GetHash(noteViewModel.Data, 16);
                 await db.Notes.AddAsync(new Note(id, noteViewModel.Data, noteViewModel.Destroying, noteViewModel.SyntaxHighlighting, deleteToken));
                 await db.SaveChangesAsync();
-                return new JsonResult(new AddResponse(0, WebUtility.UrlEncode(id), WebUtility.UrlEncode(deleteToken), ""));
+                return new JsonResult(new AddResponse(0, id, WebUtility.UrlEncode(deleteToken), ""));
             }
             catch (Exception e)
             {

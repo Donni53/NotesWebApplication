@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Protected Notes</title>
+    <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <script src="lib/js/jquery-3.3.1.min.js"></script>
+    <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="lib/js/sjcl.js"></script>
+    <script src="lib/js/base64.js"></script>
+    <script src="lib/js/rawdeflate.js"></script>
+    <script src="lib/js/rawinflate.js"></script>
+    <script src="lib/js/zerobin.js"></script>
+    <script src="lib/js/highlight.pack.js"></script>
+</head>
+<body>
+<div class="container">
+    <h3 title="Notes" onclick="window.location.href = scriptLocation();return false;">Protected notes on ASP.NET Core, JS and Bootstrap</h3><br>
+    <div id="status"></div>
+    <div id="errormessage" style="display: none" ></div>
+    <div id="toolbar" >
+        <button id="newbutton" onclick="window.location.href = scriptLocation();return false;" style="display: none;">New note</button>
+        <button id="sendbutton" onclick="send_data();return false;" style="display: none;">Send</button>
+        <button id="clonebutton" onclick="clonePaste();return false;" style="display: none;">Copy</button>
+        <button id="rawtextbutton" onclick="rawText();return false;" style="display: none;">Raw text</button>
+        <div id="remainingtime" style="display: none;"></div>
+        <div id="burnafterreadingoption" class="button" style="display: none;">
+            <input type="checkbox" id="burnafterreading" name="burnafterreading"/>
+            <label for="burnafterreading">Burn after reading</label>
+        </div>
+        <div id="syntaxcoloringoption" class="button" style="display: none;">
+            <input type="checkbox" id="syntaxcoloring" name="syntaxcoloring"/>
+            <label for="syntaxcoloring">Syntax highlighting</label>
+        </div>
+    </div>
+    <div id="pasteresult" style="display: none;" >
+        <div id="deletelink"></div>
+        <div id="pastelink"></div>
+    </div>
+    <div id="cleartext" style="display: none;" ></div>
+    <div >
+        <textarea id="message" name="message" cols="80" rows="25" style="display: none;"></textarea>
+    </div>
+    <div id="cipherdata" style="display: none;" ></div>
+</div>
+</body>
+</html>
