@@ -43,23 +43,24 @@ namespace NotesWebApplication.Controllers
                     db.Notes.Remove(note);
                     await db.SaveChangesAsync();
                 }
-                return new JsonResult(new ReadResponse(0, note.Data, note.SyntaxHighlighting, ""));
+                return new JsonResult(new ReadResponse(0, note.Data, note.SyntaxHighlighting, "", note.Destroying));
             }
             catch (Exception e)
             {
-                return new JsonResult(new ReadResponse(e.HResult, "", false, e.Message));
+                return new JsonResult(new ReadResponse(e.HResult, "", false, e.Message, false));
             }
         }
 
         [HttpGet]
         [Route("Delete")]
-        public async Task<JsonResult> DeleteNote(string deleteToken)
+        public async Task<JsonResult> DeleteNote(string id, string deleteToken)
         {
             try
             {
                 if (string.IsNullOrEmpty(deleteToken))
                     throw new Exception("Token is empty or null");
-                var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == deleteToken);
+                
+                var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == WebUtility.UrlDecode(deleteToken) && p.StringId == WebUtility.UrlDecode(id));
                 if (note == null) throw new Exception("Wrong token");
                 db.Notes.Remove(note);
                 await db.SaveChangesAsync();

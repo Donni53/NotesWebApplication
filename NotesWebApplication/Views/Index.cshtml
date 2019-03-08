@@ -10,13 +10,16 @@
     <title>Protected Notes</title>
     <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
     <script src="lib/js/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
     <script src="lib/js/sjcl.js"></script>
     <script src="lib/js/base64.js"></script>
     <script src="lib/js/rawdeflate.js"></script>
     <script src="lib/js/rawinflate.js"></script>
     <script src="lib/js/zerobin.js"></script>
-    <script src="lib/js/highlight.pack.js"></script>
 </head>
 <body>
 <div class="container">
@@ -38,6 +41,7 @@
             <label for="syntaxcoloring">Syntax highlighting</label>
         </div>
     </div>
+    <div id="burnWarning"></div>
     <div id="pasteresult" style="display: none;" >
         <div id="deletelink"></div>
         <div id="pastelink"></div>

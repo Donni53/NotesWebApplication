@@ -207,10 +207,10 @@ function displayMessages(key, comments) {
 
     // Display paste expiration.
     //if (comments[0].meta.expire_date) $('div#remainingtime').removeClass('foryoureyesonly').text('This document will expire in '+secondsToHuman(comments[0].meta.remaining_time)+'.').show();
-    /*if (comments[0].meta.burnafterreading) {
-        $('div#remainingtime').addClass('foryoureyesonly').text('FOR YOUR EYES ONLY.  Don\'t close this window, this message can\'t be displayed again.').show();
+    if (comments.burnAfterReading) {
+        $('div#burnWarning').addClass('foryoureyesonly').text('FOR YOUR EYES ONLY.  Don\'t close this window, this message can\'t be displayed again.').show();
         $('button#clonebutton').hide(); // Discourage cloning (as it can't really be prevented).
-    }*/
+    }
 }
 
 /**
@@ -252,7 +252,7 @@ function send_data() {
             if (data.status == 0) {
                 stateExistingPaste();
                 var url = scriptLocation() + "?id=" + encodeURIComponent(data.id) + '&key=' + encodeURIComponent(randomkey);
-                var deleteUrl = scriptLocation() + "?pasteid=" + data.id + '&deletetoken=' + data.deletetoken;
+                var deleteUrl = scriptLocation() + "api/notes/delete?id=" + encodeURIComponent(data.id) + '&deletetoken=' + encodeURIComponent(data.deleteToken);
                 showStatus('');
 
                 $('div#pastelink').html('Your note url <a id="pasteurl" href="' + url + '">' + url + '</a>');
@@ -482,7 +482,6 @@ $(function() {
         
         $.get(window.location.origin + "/api/notes/read?id=" + id, function (data) {
             if (data.status == 0) {
-                var messages = jQuery.parseJSON(data.data);
                 stateExistingPaste();
 
                 displayMessages(key, data);
