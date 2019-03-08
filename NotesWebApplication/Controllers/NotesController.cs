@@ -36,6 +36,7 @@ namespace NotesWebApplication.Controllers
             {
                 if (string.IsNullOrEmpty(id))
                     throw new Exception("Id is empty or null");
+                id = id.Replace(" ","+"); //js bug?
                 var note = await db.Notes.FirstOrDefaultAsync(p => p.StringId == id);
                 if (note == null) throw new Exception("Wrong id");
                 if (note.Destroying)
@@ -59,8 +60,7 @@ namespace NotesWebApplication.Controllers
             {
                 if (string.IsNullOrEmpty(deleteToken))
                     throw new Exception("Token is empty or null");
-                
-                var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == WebUtility.UrlDecode(deleteToken) && p.StringId == WebUtility.UrlDecode(id));
+                var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == deleteToken && p.StringId == id);
                 if (note == null) throw new Exception("Wrong token");
                 db.Notes.Remove(note);
                 await db.SaveChangesAsync();
@@ -80,11 +80,11 @@ namespace NotesWebApplication.Controllers
             {
                 if (string.IsNullOrEmpty(noteViewModel.Data))
                     throw new Exception("Data is empty or null");
-                var deleteToken = Cryptography.GetHash(noteViewModel.Data, 32);
+                var deleteToken = Cryptography.GetHash(noteViewModel.Data, 16);
                 var id = Cryptography.GetHash(noteViewModel.Data, 16);
                 await db.Notes.AddAsync(new Note(id, noteViewModel.Data, noteViewModel.Destroying, noteViewModel.SyntaxHighlighting, deleteToken));
                 await db.SaveChangesAsync();
-                return new JsonResult(new AddResponse(0, id, WebUtility.UrlEncode(deleteToken), ""));
+                return new JsonResult(new AddResponse(0, id, deleteToken, ""));
             }
             catch (Exception e)
             {

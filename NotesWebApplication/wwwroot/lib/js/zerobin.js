@@ -252,7 +252,7 @@ function send_data() {
             if (data.status == 0) {
                 stateExistingPaste();
                 var url = scriptLocation() + "?id=" + encodeURIComponent(data.id) + '&key=' + encodeURIComponent(randomkey);
-                var deleteUrl = scriptLocation() + "api/notes/delete?id=" + encodeURIComponent(data.id) + '&deletetoken=' + encodeURIComponent(data.deleteToken);
+                var deleteUrl = scriptLocation() + "?id=" + encodeURIComponent(data.id) + '&deletetoken=' + encodeURIComponent(data.deleteToken);
                 showStatus('');
 
                 $('div#pastelink').html('Your note url <a id="pasteurl" href="' + url + '">' + url + '</a>');
@@ -451,19 +451,6 @@ function pageKey() {
 
 $(function() {
 
-    // If "burn after reading" is checked, disable discussion.
-    $('input#burnafterreading').change(function() {
-        if ($(this).is(':checked') ) { 
-            $('div#opendisc').addClass('buttondisabled');
-            $('input#opendiscussion').attr({checked: false});
-            $('input#opendiscussion').attr('disabled',true);
-        }
-        else {
-            $('div#opendisc').removeClass('buttondisabled');
-            $('input#opendiscussion').removeAttr('disabled');
-        }
-    });
-
     // Display status returned by php code if any (eg. Paste was properly deleted.)
     if ($('div#status').text().length > 0) {
         showStatus($('div#status').text(),false);
@@ -478,6 +465,15 @@ $(function() {
     var url = new URL(url_string);
     var id = url.searchParams.get("id");
     var key = url.searchParams.get("key");
+    var deletetoken = url.searchParams.get("deletetoken");
+    if (deletetoken != null) {
+
+        $.get(window.location.origin + "/api/notes/delete?id=" + encodeURIComponent(id) + "&deletetoken=" + encodeURIComponent(deletetoken), function () {
+            newPaste();
+            return;
+        });
+    }
+    else
     if (id != null) {
         
         $.get(window.location.origin + "/api/notes/read?id=" + id, function (data) {
@@ -490,7 +486,5 @@ $(function() {
         });
     }
     else
-        newPaste();
-    
-    
+        newPaste(); 
 });
