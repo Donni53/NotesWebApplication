@@ -208,7 +208,7 @@ function displayMessages(key, comments) {
     // Display paste expiration.
     //if (comments[0].meta.expire_date) $('div#remainingtime').removeClass('foryoureyesonly').text('This document will expire in '+secondsToHuman(comments[0].meta.remaining_time)+'.').show();
     if (comments.burnAfterReading) {
-        $('div#burnWarning').addClass('foryoureyesonly').text('FOR YOUR EYES ONLY.  Don\'t close this window, this message can\'t be displayed again.').show();
+        $('div#burnWarning').append('<p class="mb-0">For your eyes only.  Don\'t close this window, this message can\'t be displayed again.</p>').show();
         $('button#clonebutton').hide(); // Discourage cloning (as it can't really be prevented).
     }
 }
@@ -308,16 +308,13 @@ function stateNewPaste() {
     $('button#rawtextbutton').hide();
     $('div#expiration').show();
     $('div#remainingtime').hide();
-    $('div#burnafterreadingoption').show();
-    $('div#opendisc').show();
-    $('div#syntaxcoloringoption').show();
+    $('div#switchbar').show();
     $('button#newbutton').show();
     $('div#pasteresult').hide();
     $('textarea#message').text('');
-    $('textarea#message').show();
-    $('div#cleartext').hide();
+    $('div#messageContainer').show();
+    $('div#cleartextContainer').hide();
     $('div#message').focus();
-    $('div#discussion').hide();
 }
 
 /**
@@ -336,13 +333,12 @@ function stateExistingPaste() {
     $('button#rawtextbutton').show();
 
     $('div#expiration').hide();
-    $('div#burnafterreadingoption').hide();
-    $('div#opendisc').hide();
-    $('div#syntaxcoloringoption').hide();    
+    $('div#switchbar').hide();
+    $('div#opendisc').hide();  
     $('button#newbutton').show();
     $('div#pasteresult').hide();
-    $('textarea#message').hide();
-    $('div#cleartext').show();
+    $('div#messageContainer').hide();
+    $('div#cleartextContainer').show();
 }
 
 /** Return raw text
@@ -405,7 +401,7 @@ function showStatus(message, spin) {
         return;
     }
     $('div#status').removeClass('errorMessage');
-    $('div#status').text(message);
+    $('div#status').append(message).show;
 }
 
 /**

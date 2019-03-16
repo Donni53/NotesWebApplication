@@ -4,8 +4,8 @@
     <meta charset="utf-8" />
     <title>Protected Notes</title>
     <link href="lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="styles/default.css" rel="stylesheet">
     <script src="lib/js/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="styles/default.css">
     <script src="lib/highlight.pack.js"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
@@ -16,35 +16,61 @@
     <script src="lib/js/zerobin.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h3 title="Notes" onclick="window.location.href = scriptLocation();return false;">Protected notes on ASP.NET Core, JS and Bootstrap</h3><br>
-        <div id="status"></div>
-        <div id="errormessage" style="display: none"></div>
-        <div id="toolbar">
-            <button id="newbutton" onclick="window.location.href = scriptLocation();return false;" style="display: none;">New note</button>
-            <button id="sendbutton" onclick="send_data();return false;" style="display: none;">Send</button>
-            <button id="clonebutton" onclick="clonePaste();return false;" style="display: none;">Copy</button>
-            <button id="rawtextbutton" onclick="rawText();return false;" style="display: none;">Raw text</button>
-            <div id="remainingtime" style="display: none;"></div>
-            <div id="burnafterreadingoption" class="button" style="display: none;">
-                <input type="checkbox" id="burnafterreading" name="burnafterreading" />
-                <label for="burnafterreading">Burn after reading</label>
-            </div>
-            <div id="syntaxcoloringoption" class="button" style="display: none;">
-                <input type="checkbox" id="syntaxcoloring" name="syntaxcoloring" />
-                <label for="syntaxcoloring">Syntax highlighting</label>
-            </div>
-        </div>
-        <div id="burnWarning"></div>
-        <div id="pasteresult" style="display: none;">
-            <div id="deletelink"></div>
-            <div id="pastelink"></div>
-        </div>
-        <div id="cleartext" style="display: none;"></div>
-        <div>
-            <textarea id="message" name="message" cols="80" rows="25" style="display: none;"></textarea>
-        </div>
-        <div id="cipherdata" style="display: none;"></div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">Protected Notes</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor01">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="https://github.com/Donni53/NotesWebApplication" target="_blank">Source</a>
+            </li>
+        </ul>
     </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="form-group" id="messageContainer" style="display: none;">
+        <h2>Enter your text</h2>
+        <textarea class="form-control" id="message" rows="20"></textarea>
+    </div>
+    
+    <div id="pasteresult" style="display: none;">
+        <div id="deletelink"></div>
+        <div id="pastelink"></div>
+    </div>
+
+    <div class="form-group" id="cleartextContainer" style="display: none;">
+        <h2>Your note content</h2>
+        <div id="burnWarning" class="alert alert-dismissible alert-warning" style="display: none;">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h4 class="alert-heading">Warning!</h4>
+        </div>
+        <div id="cleartext"></div>
+    </div>
+
+    <div class="form-group" id="switchbar" style="display: none;">
+        <div id="burnafterreadingoption" class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="burnafterreading">
+            <label class="custom-control-label" for="burnafterreading">Burn after reading</label>
+        </div>
+
+        <div id="syntaxcoloringoption" class="custom-control custom-switch">
+            <input type="checkbox" class="custom-control-input" id="syntaxcoloring">
+            <label class="custom-control-label" for="syntaxcoloring">Syntax highlighting</label>
+        </div>
+    </div>
+
+    <div id="toolbar">
+        <button id="sendbutton" onclick="send_data();return false;" class="btn btn-primary" style="display: none;">Send</button>
+        <button id="newbutton" onclick="window.location.href = scriptLocation();return false;" class="btn btn-secondary" style="display: none;">New note</button>
+        <button id="clonebutton" onclick="clonePaste();return false;" class="btn btn-info" style="display: none;">Copy</button>
+        <button id="rawtextbutton" onclick="rawText();return false;" class="btn btn-info" style="display: none;">Raw text</button>
+    </div>
+
+</div>
+
 </body>
 </html>
