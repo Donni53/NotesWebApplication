@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NotesWebApplication.Helpers;
 using NotesWebApplication.Models;
+using NotesWebApplication.Services;
 using NotesWebApplication.ViewModels;
 
 namespace NotesWebApplication.Controllers
@@ -16,16 +17,16 @@ namespace NotesWebApplication.Controllers
     [ApiController]
     public class NotesController : ControllerBase
     {
-        private NotesContext db;
-        public NotesController(NotesContext context)
+        private readonly NotesService _notesSevice;
+        public NotesController(NotesService notesService)
         {
-            db = context;
+            _notesSevice = notesService;
         }
 
         [HttpGet]
-        public string Get()
+        public IActionResult Get()
         {
-            return "Wrong hole";
+            return StatusCode(404);
         }
 
         [HttpGet]
@@ -37,13 +38,7 @@ namespace NotesWebApplication.Controllers
                 if (string.IsNullOrEmpty(id))
                     throw new Exception("Id is empty or null");
                 id = id.Replace(" ","+"); //js bug?
-                var note = await db.Notes.FirstOrDefaultAsync(p => p.StringId == id);
-                if (note == null) throw new Exception("Wrong id");
-                if (note.Destroying)
-                {
-                    db.Notes.Remove(note);
-                    await db.SaveChangesAsync();
-                }
+                var note = await _notesSevice.GetNoteByIdAsync(id);
                 return new JsonResult(new ReadResponse(0, note.Data, note.SyntaxHighlighting, "", note.Destroying));
             }
             catch (Exception e)
@@ -60,10 +55,7 @@ namespace NotesWebApplication.Controllers
             {
                 if (string.IsNullOrEmpty(deleteToken))
                     throw new Exception("Token is empty or null");
-                var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == deleteToken && p.StringId == id);
-                if (note == null) throw new Exception("Wrong token");
-                db.Notes.Remove(note);
-                await db.SaveChangesAsync();
+                await _notesSevice.DeleteNoteAsync(id, deleteToken);
                 return new JsonResult(new DeleteResponse(0, ""));
             }
             catch (Exception e)
@@ -80,11 +72,8 @@ namespace NotesWebApplication.Controllers
             {
                 if (string.IsNullOrEmpty(noteViewModel.Data))
                     throw new Exception("Data is empty or null");
-                var deleteToken = Cryptography.GetHash(noteViewModel.Data, 16);
-                var id = Cryptography.GetHash(noteViewModel.Data, 16);
-                await db.Notes.AddAsync(new Note(id, noteViewModel.Data, noteViewModel.Destroying, noteViewModel.SyntaxHighlighting, deleteToken));
-                await db.SaveChangesAsync();
-                return new JsonResult(new AddResponse(0, id, deleteToken, ""));
+                var note = await _notesSevice.AddNoteAsync(noteViewModel);
+                return new JsonResult(new AddResponse(0, note.StringId, note.DeleteToken, ""));
             }
             catch (Exception e)
             {
