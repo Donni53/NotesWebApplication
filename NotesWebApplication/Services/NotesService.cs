@@ -1,51 +1,52 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
+﻿using System.Threading.Tasks;
 using NotesWebApplication.Helpers;
 using NotesWebApplication.Models;
-using NotesWebApplication.ViewModels;
+using NotesWebApplication.Models.Repository;
+using NotesWebApplication.Models.Requests;
 
 namespace NotesWebApplication.Services
 {
-    public class NotesService
+    public class NotesService : INotesService
     {
-        private NotesContext db;
-        public NotesService(NotesContext context)
+        private readonly INotesRepository<Note> _db;
+
+        public NotesService(INotesRepository<Note> db)
         {
-            db = context;
+            _db = db;
         }
 
 
         public async Task<Note> GetNoteByIdAsync(string id)
         {
-            var note = await db.Notes.FirstOrDefaultAsync(p => p.StringId == id);
-            if (note == null) throw new Exception("Wrong id");
-            if (note.Destroying)
-            {
-                db.Notes.Remove(note);
-                await db.SaveChangesAsync();
-            }
+            var note = await _db.GetNoteByIdAsync(id);
+            if (!note.Destroying) return note;
+            await _db.DeleteNoteAsync(note.StringId, note.DeleteToken);
+            await _db.SaveChangesAsync();
 
             return note;
         }
 
         public async Task DeleteNoteAsync(string id, string deleteToken)
         {
-            var note = await db.Notes.FirstOrDefaultAsync(p => p.DeleteToken == deleteToken && p.StringId == id);
-            if (note == null) throw new Exception("Wrong token");
-            db.Notes.Remove(note);
-            await db.SaveChangesAsync();
+            await _db.DeleteNoteAsync(id, deleteToken);
+            await _db.SaveChangesAsync();
         }
 
-        public async Task<Note> AddNoteAsync(NoteViewModel noteViewModel)
+        public async Task<Note> AddNoteAsync(AddNoteRequest addNoteRequest)
         {
-            var deleteToken = Cryptography.GetHash(noteViewModel.Data, 16);
-            var id = Cryptography.GetHash(noteViewModel.Data, 16);
-            var note = await db.Notes.AddAsync(new Note(id, noteViewModel.Data, noteViewModel.Destroying, noteViewModel.SyntaxHighlighting, deleteToken));
-            await db.SaveChangesAsync();
-            return note.Entity;
+            var deleteToken = Cryptography.GetHash(addNoteRequest.Data, 16);
+            var id = Cryptography.GetHash(addNoteRequest.Data, 16);
+            var note = new Note
+            {
+                StringId = id,
+                Data = addNoteRequest.Data,
+                DeleteToken = deleteToken,
+                Destroying = addNoteRequest.Destroying,
+                SyntaxHighlighting = addNoteRequest.SyntaxHighlighting
+            };
+            await _db.AddNoteAsync(note);
+            await _db.SaveChangesAsync();
+            return note;
         }
     }
 }

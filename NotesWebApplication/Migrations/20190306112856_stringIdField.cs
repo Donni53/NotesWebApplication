@@ -7,16 +7,16 @@ namespace NotesWebApplication.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<string>(
-                name: "StringId",
-                table: "Notes",
+                "StringId",
+                "Notes",
                 nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "StringId",
-                table: "Notes");
+                "StringId",
+                "Notes");
         }
     }
 }

@@ -4,11 +4,10 @@
 
 /* Atelier-Savanna Comment */
 .hljs-comment,
-.hljs-quote {
-  color: #78877d;
-}
+.hljs-quote { color: #78877d; }
 
 /* Atelier-Savanna Red */
+
 .hljs-variable,
 .hljs-template-variable,
 .hljs-attribute,
@@ -18,67 +17,53 @@
 .hljs-link,
 .hljs-name,
 .hljs-selector-id,
-.hljs-selector-class {
-  color: #b16139;
-}
+.hljs-selector-class { color: #b16139; }
 
 /* Atelier-Savanna Orange */
+
 .hljs-number,
 .hljs-meta,
 .hljs-built_in,
 .hljs-builtin-name,
 .hljs-literal,
 .hljs-type,
-.hljs-params {
-  color: #9f713c;
-}
+.hljs-params { color: #9f713c; }
 
 /* Atelier-Savanna Green */
+
 .hljs-string,
 .hljs-symbol,
-.hljs-bullet {
-  color: #489963;
-}
+.hljs-bullet { color: #489963; }
 
 /* Atelier-Savanna Blue */
+
 .hljs-title,
-.hljs-section {
-  color: #478c90;
-}
+.hljs-section { color: #478c90; }
 
 /* Atelier-Savanna Purple */
+
 .hljs-keyword,
-.hljs-selector-tag {
-  color: #55859b;
-}
+.hljs-selector-tag { color: #55859b; }
 
 .hljs-deletion,
 .hljs-addition {
-  color: #171c19;
-  display: inline-block;
-  width: 100%;
+    color: #171c19;
+    display: inline-block;
+    width: 100%;
 }
 
-.hljs-deletion {
-  background-color: #b16139;
-}
+.hljs-deletion { background-color: #b16139; }
 
-.hljs-addition {
-  background-color: #489963;
-}
+.hljs-addition { background-color: #489963; }
 
 .hljs {
-  display: block;
-  overflow-x: auto;
-  background: #171c19;
-  color: #87928a;
-  padding: 0.5em;
+    background: #171c19;
+    color: #87928a;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
 }
 
-.hljs-emphasis {
-  font-style: italic;
-}
+.hljs-emphasis { font-style: italic; }
 
-.hljs-strong {
-  font-weight: bold;
-}
+.hljs-strong { font-weight: bold; }

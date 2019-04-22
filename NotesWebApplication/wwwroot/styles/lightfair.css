@@ -5,36 +5,26 @@ Lightfair style (c) Tristian Kelly <tristian.kelly560@gmail.com>
 */
 
 .hljs {
-  display: block;
-  overflow-x: auto;
-  padding: 0.5em;
+    display: block;
+    overflow-x: auto;
+    padding: 0.5em;
 }
 
-.hljs-name {
-    color:#01a3a3;
-}
+.hljs-name { color: #01a3a3; }
 
-.hljs-tag,.hljs-meta {
-    color:#778899;
-}
+.hljs-tag, .hljs-meta { color: #778899; }
 
 .hljs,
-.hljs-subst {
-    color: #444
-}
+.hljs-subst { color: #444 }
 
-.hljs-comment {
-    color: #888888
-}
+.hljs-comment { color: #888888 }
 
 .hljs-keyword,
 .hljs-attribute,
 .hljs-selector-tag,
 .hljs-meta-keyword,
 .hljs-doctag,
-.hljs-name {
-    font-weight: bold
-}
+.hljs-name { font-weight: bold }
 
 .hljs-type,
 .hljs-string,
@@ -43,9 +33,7 @@ Lightfair style (c) Tristian Kelly <tristian.kelly560@gmail.com>
 .hljs-selector-class,
 .hljs-quote,
 .hljs-template-tag,
-.hljs-deletion {
-    color: #4286f4
-}
+.hljs-deletion { color: #4286f4 }
 
 .hljs-title,
 .hljs-section {
@@ -59,29 +47,17 @@ Lightfair style (c) Tristian Kelly <tristian.kelly560@gmail.com>
 .hljs-template-variable,
 .hljs-link,
 .hljs-selector-attr,
-.hljs-selector-pseudo {
-    color: #BC6060
-}
+.hljs-selector-pseudo { color: #BC6060 }
 
-.hljs-literal {
-    color: #62bcbc
-}
+.hljs-literal { color: #62bcbc }
 
 .hljs-built_in,
 .hljs-bullet,
 .hljs-code,
-.hljs-addition {
-    color: #25c6c6
-}
+.hljs-addition { color: #25c6c6 }
 
-.hljs-meta-string {
-    color: #4d99bf
-}
+.hljs-meta-string { color: #4d99bf }
 
-.hljs-emphasis {
-    font-style: italic
-}
+.hljs-emphasis { font-style: italic }
 
-.hljs-strong {
-    font-weight: bold
-}
+.hljs-strong { font-weight: bold }

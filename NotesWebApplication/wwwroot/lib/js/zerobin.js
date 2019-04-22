@@ -1,30 +1,4 @@
 /**
- * ZeroBin 0.19
- *
- * @link http://sebsauvage.net/wiki/doku.php?id=php:zerobin
- * @author sebsauvage
- */
-
-// Immediately start random number generator collector.
-sjcl.random.startCollectors();
-
-/**
- *  Converts a duration (in seconds) into human readable format.
- *
- *  @param int seconds
- *  @return string
- */
-function secondsToHuman(seconds)
-{
-    if (seconds<60) { var v=Math.floor(seconds); return v+' second'+((v>1)?'s':''); }
-    if (seconds<60*60) { var v=Math.floor(seconds/60); return v+' minute'+((v>1)?'s':''); }
-    if (seconds<60*60*24) { var v=Math.floor(seconds/(60*60)); return v+' hour'+((v>1)?'s':''); }
-    // If less than 2 months, display in days:
-    if (seconds<60*60*24*60) { var v=Math.floor(seconds/(60*60*24)); return v+' day'+((v>1)?'s':''); }
-    var v=Math.floor(seconds/(60*60*24*30)); return v+' month'+((v>1)?'s':'');
-}
-
-/**
  * Converts an associative array to an encoded string
  * for appending to the anchor.
  *
@@ -212,11 +186,6 @@ function displayMessages(key, comments) {
         $('button#clonebutton').hide(); // Discourage cloning (as it can't really be prevented).
     }
 }
-
-/**
- * Send a reply in a discussion.
- * @param string parentid : the comment identifier we want to send a reply to.
- */
 
 
 /**
